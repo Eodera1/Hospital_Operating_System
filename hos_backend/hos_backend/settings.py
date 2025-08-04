@@ -3,10 +3,12 @@ from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here')
-DEBUG = config('DEBUG', default=True, cast=bool)
+# Security: Use a secure SECRET_KEY or generate a new one
+SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here')  # Replace with a secure key or use .env
+DEBUG = config('DEBUG', default=True, cast=bool)  # Set to True for development
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'your-digitalocean-ip', 'your-domain.com']
+# Update ALLOWED_HOSTS for your environment
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']  # Remove placeholders for now
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -17,9 +19,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'patients',
-    'staff',
-    'appointments',
+    'patients.apps.PatientsConfig',  # Use Config for explicit app configuration
+    'staff.apps.StaffConfig',
+    'appointments.apps.AppointmentsConfig',
     'rest_framework_simplejwt',
     'cryptography',
 ]
@@ -35,9 +37,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Update CORS_ALLOWED_ORIGINS for your frontend
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'https://your-domain.com',
+    'http://localhost:3000',  # Adjust if using a different frontend port
 ]
 
 REST_FRAMEWORK = {
@@ -69,16 +71,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hos_backend.wsgi.application'
 
+# Adjust DATABASES based on your current setup (SQLite for now, update for MySQL later)
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hos_db',
-        'USER': 'hos_user',
-        'PASSWORD': 'SecurePass123!',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # Default SQLite database
     }
 }
+# If using MySQL, ensure it's configured and replace with:
+# 'ENGINE': 'django.db.backends.mysql',
+# 'NAME': 'hos_db',
+# 'USER': 'hos_user',
+# 'PASSWORD': 'SecurePass123!',
+# 'HOST': 'localhost',
+# 'PORT': '3306',
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -95,8 +101,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Set TIME_ZONE to match your location
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'  # EAT (UTC+3)
 USE_I18N = True
 USE_TZ = True
 
@@ -105,8 +112,9 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
+# Comment out Celery settings if not in use
+# CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
