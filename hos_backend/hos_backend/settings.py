@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security: Use a secure SECRET_KEY or generate a new one
 SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here')  # Replace with a secure key or use .env
-DEBUG = config('DEBUG', default=True, cast=bool)  # Set to True for development
+DEBUG = config('DEBUG', default=False, cast=bool)  # Set to True for development
 
 # Update ALLOWED_HOSTS for your environment
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']  # Remove placeholders for now
@@ -81,8 +81,8 @@ DATABASES = {
 # If using MySQL, ensure it's configured and replace with:
 # 'ENGINE': 'django.db.backends.mysql',
 # 'NAME': 'hos_db',
-# 'USER': 'hos_user',
-# 'PASSWORD': 'SecurePass123!',
+# 'USER': 'erickowino',
+# 'PASSWORD': 'Password@123',
 # 'HOST': 'localhost',
 # 'PORT': '3306',
 
